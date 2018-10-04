@@ -1,0 +1,26 @@
+serial_number=Seriennummer
+search=Suchen
+update=Aktualisieren
+
+create.create=Erstellen einer Seriennummer
+create.usetool=Zum Erstellungshilfsprogramm
+create.scan=Scanne den Code auf der Platine, dem Gerät oder der Antenne ein
+create.submit=Absenden
+
+home.lock=Sperren
+home.unlock=Sperre aufheben
+home.history=Geschichte
+home.info=Info
+
+site.title=Versions- und Seriennummerverwaltungsystem elektronischer und mechanischer Baugruppen
+site.hello=Hallo:
+site.list_multiple=Mehrere Auflisten
+site.list_all=Alle Auflisten
+site.new=Neu
+site.scanner_codes=Barcodescannercodes
+site.admin=Admin & Entwickler
+
+table.job=Tätigkeit
+table.date=Datum
+table.person=Zuständig
+table.pcb=Platine

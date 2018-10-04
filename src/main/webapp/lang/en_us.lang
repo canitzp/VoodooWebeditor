@@ -1,0 +1,40 @@
+antenna=Antenna
+device=Device
+protocol=Protocol
+serial_number=Serial number
+search=Search
+update=Update
+usage=Usage
+
+create.create=Create serial number
+create.usetool=Use creation tool
+create.scan=Scan the code on the new pcb/device/dish
+create.submit=Create
+
+error.serial_number_already_exists=The serial number '%s' already exists! (DuplicateEntryException)
+error.version_template_not_found=There is no template for the serial number '%s'! (MissingTemplateException)
+error.version_not_parsable=The serial number '%s' is not parsable! (InvalidFormatException)
+
+home.lock=Lock
+home.unlock=Unlock
+home.history=History
+home.info=Info
+
+list.filter=Filter
+list.filter_desc=- '/' for deep search\n- one filter per line\n- Regex possible (automaticly replaced: * -> (.*), ? -> ., + -> \+)
+list.not_in_use=Not in use
+list.view_extended=Click for Extended view
+list.view_normal=Click for Normal view
+
+site.title=Version and serial number management system of electronic and mechanical assemblies
+site.hello=Hello:
+site.list_multiple=List multiple
+site.list_all=List all
+site.new=New
+site.scanner_codes=Scanner codes
+site.admin=Admin & Developer
+
+table.job=Task
+table.date=Date
+table.person=Person
+table.pcb=Circuit board

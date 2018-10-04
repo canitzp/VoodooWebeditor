@@ -1,0 +1,39 @@
+:root {
+    --epak-black:#000000;
+    --epak-blue:#0c539a;
+    --epak-dark-grey:#444444;
+    --epak-light-grey:#ececec;
+    --epak-white:#FFFFFF;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        'menu main';
+    grid-template-rows: 1fr;
+    grid-template-columns: auto 1fr;
+    grid-gap: 3px;
+    background-color: var(--epak-light-grey);
+    height: 100%;
+}
+
+.grid-container > div {
+    text-align: center;
+    vertical-align: center;
+    font-size: 12pt;
+}
+
+.itemMain {
+    grid-area: main;
+    padding: 3px 3px 3px 0;
+    background-color: var(--epak-white);
+    overflow: auto;
+    height: 100%;
+    box-sizing: border-box;
+ }
+
+.itemMenu {
+    grid-area: menu;
+    background-color: var(--epak-dark-grey);
+    height: 100%;
+}

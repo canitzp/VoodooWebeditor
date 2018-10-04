@@ -1,0 +1,45 @@
+plugins {
+    id 'ear'
+    id 'java'
+    id 'war'
+    id "com.bmuschko.tomcat" version "2.5"
+}
+
+group 'de.canitzp.voodoowebeditor'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+war {
+    archiveName = 'voodoowebeditor.war'
+}
+
+dependencies {
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    compile 'com.j2html:j2html:1.3.0'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.11'
+    compile group: 'org.sql2o', name: 'sql2o', version: '1.5.4'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    compile group: 'com.atlassian.commonmark', name: 'commonmark', version: '0.11.0'
+    compile group: 'com.atlassian.commonmark', name: 'commonmark-ext-gfm-tables', version: '0.11.0'
+    compile group: 'com.atlassian.commonmark', name: 'commonmark-ext-gfm-strikethrough', version: '0.11.0'
+    compile group: 'net.lingala.zip4j', name: 'zip4j', version: '1.3.2'
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8'
+    compile group: 'org.apache.commons', name: 'commons-text', version: '1.4'
+
+    def tomcatVersion = '7.0.57'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+    "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+    tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}")
+}
+
+tomcatRun.contextPath = '/'
+tomcatRunWar.contextPath = '/'

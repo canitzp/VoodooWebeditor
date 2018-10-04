@@ -1,0 +1,31 @@
+/*#con_anim_div {
+    position: absolute;
+    top: 40%;
+    left: 45%;
+}*/
+
+#con_anim_div img {
+    position: absolute;
+}
+
+@keyframes cf3FadeInOut {
+    0% {
+        opacity: 0;
+    }
+    49% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+#con_anim_div img.top {
+    animation-name: cf3FadeInOut;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: 1.5s;
+}
