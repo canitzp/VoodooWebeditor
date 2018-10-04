@@ -2,6 +2,8 @@ package de.canitzp.voodoowebeditor.internal.voodoo;
 
 import de.canitzp.voodoowebeditor.internal.mod.CurseMod;
 
+import java.net.MalformedURLException;
+
 public class ModLockJsonCurse{
     
     private String provider = "CURSE";
@@ -10,7 +12,7 @@ public class ModLockJsonCurse{
     private int projectID;
     private int fileID;
     
-    public ModLockJsonCurse(CurseMod mod){
+    public ModLockJsonCurse(CurseMod mod) throws MalformedURLException{
         this.id = mod.getProject().getSlug();
         this.name = mod.getProject().getName();
         this.projectID = mod.getProject().getId();

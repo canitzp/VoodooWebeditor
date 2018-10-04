@@ -1,12 +1,13 @@
 package de.canitzp.voodoowebeditor.internal.mod;
 
 import java.io.FileWriter;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Mod<T extends Mod>{
     
-    private boolean optional, selected, client = true, server = true;
+    private boolean optional, selected, client, server;
     private List<String> validMcVersions = new ArrayList<>();
     
     protected T castThis(){
@@ -15,7 +16,7 @@ public abstract class Mod<T extends Mod>{
     
     public abstract String getProvider();
     
-    public abstract String getFileName();
+    public abstract String getFileName() throws MalformedURLException;
     
     public T setMcVersions(List<String> validMcVersions){
         this.validMcVersions = validMcVersions;
@@ -65,7 +66,7 @@ public abstract class Mod<T extends Mod>{
         return selected;
     }
     
-    public abstract void writeLockJson(FileWriter writer);
+    public abstract void writeLockJson(FileWriter writer) throws MalformedURLException;
     
-    public abstract void writeEntryJson(FileWriter writer);
+    public abstract void writeEntryJson(FileWriter writer) throws MalformedURLException;
 }

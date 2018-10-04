@@ -5,16 +5,19 @@ import de.canitzp.voodoowebeditor.IWebsite;
 import de.canitzp.voodoowebeditor.ServletEntry;
 import de.canitzp.voodoowebeditor.Site;
 import de.canitzp.voodoowebeditor.internal.Modpack;
+import de.canitzp.voodoowebeditor.internal.curse.CurseFile;
+import de.canitzp.voodoowebeditor.internal.curse.CurseProject;
+import de.canitzp.voodoowebeditor.internal.curse.LoadCurse;
+import de.canitzp.voodoowebeditor.internal.mod.CurseMod;
+import j2html.TagCreator;
 import j2html.tags.DomContent;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.net.MalformedURLException;
+import java.util.*;
 
 import static j2html.TagCreator.*;
 
@@ -56,8 +59,19 @@ public class Editor extends ServletEntry implements IWebsite{
                 if(changed){
                     FileIO.saveModpack(modpack, FileIO.getModpackDir(modpack));
                 }
-                if(site.hasParameter("cf")){
-                    // add curseforge mod
+                if(site.hasParameter("cf", false)){
+                    CurseProject project = LoadCurse.getProjectByName(site.getParameterOrEmpty("cf"));
+                    String filter = site.getParameterOrEmpty("cffilter");
+                    if(project != null){
+                        CurseFile file = LoadCurse.getFileFor(project.getId(), modpack.getMcVersions(), filter);
+                        if(file != null){
+                            FileIO.addMod(modpack, new CurseMod(project, file));
+                        } else {
+                            System.out.println("No file could be found for '" + project.getName() + "'!");
+                        }
+                    } else {
+                        System.out.println("Project '" + site.getParameterOrEmpty("cf") + "' couldn't be found!");
+                    }
                 } else if(site.hasParameter("dl")){
                     // add direct link mod
                 }
@@ -75,6 +89,9 @@ public class Editor extends ServletEntry implements IWebsite{
         if(modpack == null || !modpack.canUserUse(site.getUser())){
             return div();
         }
+        Map<String, String> map = LoadCurse.getAllModsNamesAndSlug();
+        List<String> name = new ArrayList<>(map.keySet());
+        List<String> slugs = new ArrayList<>(map.values());
         return div()
             .withStyle("width: 50%; margin: 0 auto")
             .with(
@@ -164,17 +181,59 @@ public class Editor extends ServletEntry implements IWebsite{
                                 th("Provider")
                             )
                             .with(
-                                each(modpack.getAllMods(), mod -> tr(td(mod.getFileName()), td(mod.getProvider())).withStyle("border: 1px solid black"))
+                                each(modpack.getAllMods(), mod -> {
+                                    try{
+                                        return tr(td(mod.getFileName()), td(mod.getProvider())).withStyle("border: 1px solid black");
+                                    }catch(MalformedURLException e){
+                                        e.printStackTrace();
+                                    }
+                                    return null;
+                                })
                             )
                     )
-                .with(
-                    button("Add Curseforge mod")
-                    .attr("onclick", "window.location='editor?id=" + modpack.getId().toString() + "&cf'")
-                )
-                .with(
-                    button("Add direct URL mod")
-                        .attr("onclick", "window.location='editor?id=" + modpack.getId().toString() + "&dl'")
-                )
+                    .with(
+                        button("Add Curseforge mod")
+                            .attr("onclick", "window.location='editor?id=" + modpack.getId().toString() + "&cf'")
+                    )
+                    .with(
+                        button("Add direct URL mod")
+                            .attr("onclick", "window.location='editor?id=" + modpack.getId().toString() + "&dl'")
+                    )
+                    .condWith(site.hasParameter("cf"),
+                        div()
+                            .with(
+                                form()
+                                    .with(
+                                        label("Mod name:"),
+                                        input()
+                                            .withType("text")
+                                            .withName("cf")
+                                            .attr("list", "cursemods"),
+                                        datalist()
+                                            .withId("cursemods")
+                                            .with(
+                                                each(name, TagCreator::option)
+                                            ),
+                                        br()
+                                    )
+                                    .with(
+                                        label("Name filter:"),
+                                        input()
+                                            .withType("text")
+                                        .withName("cffilter")
+                                    )
+                                    .with(
+                                        input()
+                                            .withType("hidden")
+                                            .withName("id")
+                                            .withValue(modpack.getId().toString())
+                                    )
+                                    .with(
+                                        input()
+                                            .withType("submit")
+                                    )
+                            )
+                    )
             );
     }
     
